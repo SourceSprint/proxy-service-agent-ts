@@ -4,6 +4,8 @@ import {
   GetRequestOptions,
   PostRequestOptions,
   BaseResponse,
+  BaseResponseData,
+  BaseResponseError,
 } from "./interfaces";
 
 import { getSchema, postSchema } from "./schema";
@@ -67,7 +69,11 @@ class Agent {
 
     const { data } = await this.axios(config);
 
-    return data;
+    if (data.success) {
+      return data as BaseResponseData;
+    }
+
+    return data as BaseResponseError;
   }
 
   public async post(options: PostRequestOptions): Promise<BaseResponse> {
@@ -90,7 +96,11 @@ class Agent {
 
     const { data } = await this.axios(config);
 
-    return data;
+    if (data.success) {
+      return data as BaseResponseData;
+    }
+
+    return data as BaseResponseError;
   }
 }
 
