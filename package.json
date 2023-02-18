@@ -1,6 +1,6 @@
 {
   "name": "@boxpositron/proxy-service-agent-ts",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Proxy Service Agent for NodeJS",
   "main": "dist/index.js",
   "scripts": {
