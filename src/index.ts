@@ -49,12 +49,14 @@ class Agent {
     );
   }
 
-  public async get(options: GetRequestOptions): Promise<BaseResponse> {
+  public async get<T = unknown, K = unknown>(
+    options: GetRequestOptions
+  ): Promise<BaseResponse<T, K>> {
     const _options = await getSchema.validate(options, {
       abortEarly: false,
     });
 
-    const { url = "/", params, proxy, headers } = _options;
+    const { url = "/", params, proxy, headers, ssl } = _options;
 
     const config: AxiosRequestConfig = {
       url: "/get",
@@ -64,24 +66,27 @@ class Agent {
         params,
         proxy,
         headers,
+        verify_ssl: ssl,
       },
     };
 
     const { data } = await this.axios(config);
 
     if (data.success) {
-      return data as BaseResponseData;
+      return data as BaseResponseData<T>;
     }
 
-    return data as BaseResponseError;
+    return data as BaseResponseError<K>;
   }
 
-  public async post(options: PostRequestOptions): Promise<BaseResponse> {
+  public async post<T = unknown, K = unknown>(
+    options: PostRequestOptions
+  ): Promise<BaseResponse<T, K>> {
     const _options = await postSchema.validate(options, {
       abortEarly: false,
     });
 
-    const { url = "/", data: body, proxy, headers } = _options;
+    const { url = "/", data: body, proxy, headers, ssl } = _options;
 
     const config: AxiosRequestConfig = {
       url: "/post",
@@ -91,16 +96,17 @@ class Agent {
         body,
         proxy,
         headers,
+        verify_ssl: ssl,
       },
     };
 
     const { data } = await this.axios(config);
 
     if (data.success) {
-      return data as BaseResponseData;
+      return data as BaseResponseData<T>;
     }
 
-    return data as BaseResponseError;
+    return data as BaseResponseError<K>;
   }
 }
 
