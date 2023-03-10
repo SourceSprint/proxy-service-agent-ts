@@ -7,6 +7,7 @@ export const getSchema: Yup.ObjectSchema<GetRequestOptions> =
     params: Yup.object(),
     proxy: Yup.string(),
     headers: Yup.object(),
+    ssl: Yup.boolean(),
   });
 
 export const postSchema: Yup.ObjectSchema<PostRequestOptions> =
@@ -16,4 +17,5 @@ export const postSchema: Yup.ObjectSchema<PostRequestOptions> =
     data: Yup.object(),
     proxy: Yup.string(),
     headers: Yup.object(),
+    ssl: Yup.boolean(),
   });
