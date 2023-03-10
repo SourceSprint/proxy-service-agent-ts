@@ -1,8 +1,9 @@
-import { AxiosRequestConfig, AxiosResponse } from "axios";
+import { AxiosRequestConfig } from "axios";
 
 export interface BaseRequestOptions
   extends Pick<AxiosRequestConfig, "headers" | "params" | "data" | "url"> {
   proxy?: string;
+  ssl?: boolean;
 }
 
 export type GetRequestOptions = Omit<BaseRequestOptions, "data">;
@@ -10,8 +11,8 @@ export type PostRequestOptions = BaseRequestOptions;
 
 // TODO: Add more methods (PUT, PATCH, DELETE, etc.)
 
-export interface BaseResponseData {
-  response: any;
+export interface BaseResponseData<T = unknown> {
+  response: T;
   encoded: string;
   response_url: string;
   status: number;
@@ -19,8 +20,8 @@ export interface BaseResponseData {
   success: boolean;
 }
 
-export interface BaseResponseError {
-  response?: any;
+export interface BaseResponseError<T = unknown> {
+  response?: T;
   response_url?: string;
   status?: number;
   headers: Record<string, string>;
@@ -29,4 +30,6 @@ export interface BaseResponseError {
   message?: string;
 }
 
-export type BaseResponse = BaseResponseData | BaseResponseError;
+export type BaseResponse<T = unknown, K = unknown> =
+  | BaseResponseData<T>
+  | BaseResponseError<K>;
